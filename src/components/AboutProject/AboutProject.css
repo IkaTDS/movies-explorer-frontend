@@ -2,6 +2,7 @@
     padding: 0 70px;
     display: flex;
     flex-direction: column;
+    background-color: #fafafa;
 }
 
 .about-project__title {
