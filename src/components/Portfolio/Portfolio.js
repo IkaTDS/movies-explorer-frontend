@@ -4,19 +4,25 @@ import { Link } from "react-router-dom";
 
 export default function Portfolio() {
   return (
-    <div className="portfolio">
+    <section className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__item">
-          <Link className="portfolio__link">Статичный сайт</Link>
+          <Link className="portfolio__link" to="#" target="_blank">
+            Статичный сайт
+          </Link>
         </li>
         <li className="portfolio__item">
-          <Link className="portfolio__link">Адаптивный сайт</Link>
+          <Link className="portfolio__link" to="#" target="_blank">
+            Адаптивный сайт
+          </Link>
         </li>
         <li className="portfolio__item">
-          <Link className="portfolio__link">Одностраничное приложение</Link>
+          <Link className="portfolio__link" to="#" target="_blank">
+            Одностраничное приложение
+          </Link>
         </li>
       </ul>
-    </div>
+    </section>
   );
 }

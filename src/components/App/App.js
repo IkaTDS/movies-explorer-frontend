@@ -5,6 +5,7 @@ import Profile from '../Profile/Profile';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
 import './App.css';
 import Header from '../Header/Header';
 import React from 'react';
@@ -52,6 +53,8 @@ function App() {
         </Route>
 
       </Switch>
+
+      <Footer />
     </div>
   );
 }
