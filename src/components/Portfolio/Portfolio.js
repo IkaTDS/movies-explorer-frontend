@@ -1,6 +1,5 @@
 import React from "react";
 import "./Portfolio.css";
-import { Link } from "react-router-dom";
 
 export default function Portfolio() {
   return (
@@ -8,19 +7,34 @@ export default function Portfolio() {
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__item">
-          <Link className="portfolio__link" to="#" target="_blank">
+          <a
+            className="portfolio__link"
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             Статичный сайт
-          </Link>
+          </a>
         </li>
         <li className="portfolio__item">
-          <Link className="portfolio__link" to="#" target="_blank">
+          <a
+            className="portfolio__link"
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             Адаптивный сайт
-          </Link>
+          </a>
         </li>
         <li className="portfolio__item">
-          <Link className="portfolio__link" to="#" target="_blank">
+          <a
+            className="portfolio__link"
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             Одностраничное приложение
-          </Link>
+          </a>
         </li>
       </ul>
     </section>

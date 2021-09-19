@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
@@ -58,6 +58,14 @@ function App() {
         <Route path="/signin">
           <Login />
         </Route>
+
+        <Route path="/not-found">
+          <NotFound />
+        </Route>
+
+        <Route path="*">
+          <Redirect to="/not-found" />
+        </Route>
       </Switch>
 
       <Switch>
@@ -65,8 +73,6 @@ function App() {
           <Footer />
         </Route>
       </Switch>
-
-      <NotFound />
     </div>
   );
 }

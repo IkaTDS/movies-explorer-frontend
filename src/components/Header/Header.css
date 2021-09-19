@@ -50,6 +50,16 @@
     line-height: 16px;
 }
 
+.header__signup-button:hover {
+    opacity: .6;
+    transition: .4s;
+}
+
+.header__signin-button:hover {
+    background-color: #2a46c4;
+    transition: .4s;
+}
+
 
 .header__navigation {
     justify-self: center;

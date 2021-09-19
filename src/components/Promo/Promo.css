@@ -67,6 +67,12 @@
     color: #000;
 }
 
+.promo__link-button:hover {
+    background-color: #3456F3;
+    color: #fff;
+    border: none;
+}
+
 @media screen and (max-width: 840px) {
     .promo {
         padding: 0 44px;

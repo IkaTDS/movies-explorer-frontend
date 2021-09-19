@@ -1,7 +1,6 @@
 import React from "react";
 import "./AboutMe.css";
 import portrait from "../../images/about-me-portrait.png";
-import { Link } from "react-router-dom"
 
 export default function AboutMe() {
   return (
@@ -22,18 +21,24 @@ export default function AboutMe() {
           </p>
           <ul className="about-me__socials">
             <li className="about-me__social-item">
-              <Link
+              <a
                 className="about-me__link"
-                to="facebook.com"
+                href="facebook.com"
                 target="_blank"
+                rel="noreferrer"
               >
                 Facebook
-              </Link>
+              </a>
             </li>
             <li className="about-me__social-item">
-              <Link className="about-me__link" to="github.com" target="_blank">
+              <a
+                className="about-me__link"
+                href="github.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Github
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
