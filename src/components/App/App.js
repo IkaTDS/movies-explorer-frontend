@@ -9,6 +9,7 @@ import Footer from "../Footer/Footer";
 import "./App.css";
 import Header from "../Header/Header";
 import React from "react";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   const [isBurgerMenuOpen, setBurgerMenuOpen] = React.useState(false);
@@ -23,11 +24,15 @@ function App() {
 
   return (
     <div className="page">
-      <Header
-        isBurgerMenuOpen={isBurgerMenuOpen}
-        burgerMenuOpen={handleBurgerButtonClick}
-        burgerMenuClose={handleBurgerCloseButtonClick}
-      />
+      <Switch>
+        <Route exact path={["/", "/movies", "/saved-movies", "/profile"]}>
+          <Header
+            isBurgerMenuOpen={isBurgerMenuOpen}
+            burgerMenuOpen={handleBurgerButtonClick}
+            burgerMenuClose={handleBurgerCloseButtonClick}
+          />
+        </Route>
+      </Switch>
 
       <Switch>
         <Route exact path="/">
@@ -60,6 +65,8 @@ function App() {
           <Footer />
         </Route>
       </Switch>
+
+      <NotFound />
     </div>
   );
 }

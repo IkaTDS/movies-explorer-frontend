@@ -30,6 +30,7 @@
     border: none;
     text-align: right;
     outline: none;
+    background-color: transparent;
 }
 
 .profile__container {
