@@ -51,12 +51,12 @@
 }
 
 .header__signup-button:hover {
-    opacity: .6;
+    opacity: .8;
     transition: .4s;
 }
 
 .header__signin-button:hover {
-    background-color: #2a46c4;
+    opacity: .8;
     transition: .4s;
 }
 
@@ -103,6 +103,10 @@
     border-radius: 40px;
 }
 
+.header__profile-link:hover {
+    opacity: .8;
+}
+
 .header__profile-link::after {
     width: 26px;
     height: 26px;
@@ -136,7 +140,7 @@
     right: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 2;
+    z-index: 11;
 }
 
 .header__burger-container_opened {
@@ -154,7 +158,6 @@
     background-color: #fafafa;
     right: 0;
     top: 0;
-    z-index: 3;
     align-items: center;
 }
 

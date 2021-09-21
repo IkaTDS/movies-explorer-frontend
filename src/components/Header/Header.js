@@ -61,7 +61,7 @@ function Header(props) {
               ></button>
               <nav className="header__burger-navigation">
                 <NavLink
-                  to="/"
+                  exact to="/"
                   className="header__burger-link"
                   activeClassName="header__burger-link_active"
                   onClick={props.burgerMenuClose}

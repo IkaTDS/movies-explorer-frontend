@@ -31,6 +31,10 @@
     cursor: pointer;
 }
 
+.not-found__button-back:hover {
+    opacity: .7;
+}
+
 @media screen and (max-width: 770px) {
     .not-found__title {
         margin: 408px 0 0;

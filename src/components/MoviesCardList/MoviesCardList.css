@@ -30,6 +30,10 @@
     border-radius: 6px;
 }
 
+.card-list__more-button:hover {
+    opacity: .8;
+}
+
 @media screen and (max-width: 800px) {
     .card-list {
         padding: 60px 30px 30px;

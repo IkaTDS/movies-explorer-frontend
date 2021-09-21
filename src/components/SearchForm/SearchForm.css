@@ -53,7 +53,10 @@
     border: 0;
     flex-grow: 1;
     position: relative;
-    outline: none;
+}
+
+.search-form__input:focus {
+    outline: 2px solid #3456F3;
 }
 
 .search-form__button {
@@ -75,6 +78,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+.search-form__button:hover {
+    opacity: .8;
 }
 
 .search-form__button::after {

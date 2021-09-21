@@ -101,6 +101,10 @@
     margin: 134px 0 0;
 }
 
+.register__button:hover {
+    opacity: .8;
+}
+
 .register__signin-label {
     font-style: normal;
     font-weight: normal;
@@ -115,6 +119,10 @@
     color: #3456F3;
     text-decoration: none;
     margin: 0 0 0 6px;
+}
+
+.register__login:hover {
+    opacity: .7;
 }
 
 @media screen and (max-width: 770px) {

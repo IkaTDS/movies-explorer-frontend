@@ -84,6 +84,7 @@
 
     .techs__list {
         margin: 83px 0 90px;
+        flex-wrap: wrap;
     }
 
     .techs__list_item {

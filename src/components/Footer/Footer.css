@@ -44,6 +44,10 @@
     line-height: 16px;
 }
 
+.footer__link:hover {
+    opacity: .7;
+}
+
 .footer__list {
     align-items: center;
     list-style-type: none;

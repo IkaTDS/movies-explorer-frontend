@@ -41,7 +41,7 @@ export default function Login() {
         </form>
         <span className="login__signin-label">
           Ещё не зарегестрированы?
-          <Link to="/sign-in" className="login__login">
+          <Link to="/sign-in" className="login__register">
             Регистрация
           </Link>
         </span>

@@ -70,6 +70,10 @@
     line-height: 17px;
 }
 
+.about-me__link:hover {
+    opacity: .7;
+}
+
 .about-me__portrait {
     margin: 0 0 0 49px;
     max-width: 270px;
