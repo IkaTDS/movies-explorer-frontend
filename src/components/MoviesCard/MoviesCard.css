@@ -1,0 +1,105 @@
+.movies-card {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f4f4f4;
+    padding: 6px 6px 6px 22px;
+}
+
+.movies-card_hidden {
+    display: none;
+}
+
+.movies-card__description {
+    display: flex;
+    flex-direction: column;
+}
+
+.movies-card__description-container {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 0 0;
+}
+
+.movies-card__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
+}
+
+.movies-card__duration {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #A0A0A0;
+    margin: 13px 0 0;
+}
+
+.movies-card__button-container {
+    margin: 30px 0 0;
+}
+
+.movies-card__saved {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-image: url(../../images/movies-card-empty-like.svg);
+    width: 14px;
+    height: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.movies-card__saved_hovered:hover {
+    background-image: url(../../images/movies-card-like.svg);
+}
+
+.movies-card__saved_active {
+    background-image: url(../../images/movies-card-like.svg);
+}
+
+.movies-card__delete-card {
+    border: none;
+    padding: 0;
+    background-image: url(../../images/movies-card-delete.svg);
+    width: 8.13px;
+    height: 8.13px;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 600px) {
+    .movies-card {
+        flex-direction: column-reverse;
+        padding: 0;
+    }
+
+    .movies-card__description {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .movies-card__description-container {
+        margin: 14px 0 14px 12px;
+    }
+
+    .movies-card__title {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    
+    .movies-card__duration {
+        margin: 8px 0 0;
+    }
+
+    .movies-card__button-container {
+        margin: 16px 16px 0 0;
+    }
+}
