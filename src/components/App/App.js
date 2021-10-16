@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, Switch, Redirect, useHistory, useLocation } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import Profile from "../Profile/Profile";
@@ -19,7 +25,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   const [isBurgerMenuOpen, setBurgerMenuOpen] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
-  // const [isPageIsLoading, setPageIsLoading] = React.useState(true);
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
@@ -47,26 +52,37 @@ function App() {
   }, [width]);
 
   React.useEffect(() => {
-    if (localStorage.getItem("token")) {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+    if (token) {
       mainApi
         .checkToken(token)
         .then((user) => {
-          setCurrentUser(user);
-          setLoggedIn(true);
-          history.push(location)
+          if (user) {
+            setLoggedIn(true);
+            setCurrentUser(user);
+            history.push(location);
+          }
         })
         .catch((err) => {
           console.log(`${err}`);
+          localStorage.removeItem("token");
+          history.push("/");
         });
     }
-  }, [isLoading]);
+  }, []);
 
   React.useEffect(() => {
-    if (isLoggedIn) {
-      mainApi
-        .getMovies()
-        .then((movies) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    } else {
+      Promise.all([mainApi.getUser(token), mainApi.getMovies()])
+        .then(([userData, movies]) => {
+          setCurrentUser({
+            ...currentUser,
+            name: userData.name,
+            email: userData.email,
+          });
           localStorage.setItem("savedMovies", JSON.stringify(movies));
           setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
           setFilteredSavedMovies(
@@ -74,7 +90,7 @@ function App() {
           );
         })
         .catch((err) => {
-          console.log(`${err}`);
+          console.log(err);
         });
     }
   }, [isLoggedIn]);
@@ -119,7 +135,7 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setCurrentUser({});
+    setCurrentUser({name: "", email: ""});
     history.push("/");
   }
 
@@ -166,13 +182,14 @@ function App() {
   }
 
   function handleSignIn(data) {
-    setLoading(true);
     mainApi
       .login(data)
       .then((res) => {
-        localStorage.setItem("token", res.token);
-        history.push("/movies");
-        setLoggedIn(true);
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          history.push("/movies");
+          setLoggedIn(true);
+        }
       })
       .catch((err) => {
         console.log(`${err}`);
@@ -192,13 +209,13 @@ function App() {
 
   function deleteMovie(movie) {
     const movieId = savedMovies.find(
-      (i) => i.movieId === movie.movieId || movie.id
+      (savedMovie) => savedMovie.movieId === (movie.movieId || movie.id)
     )._id;
     console.log(movieId);
     mainApi
       .deleteMovie(movieId)
       .then(() => {
-        setSavedMovies((state) => state.filter((c) => c.movieId !== movieId));
+        setSavedMovies((state) => state.filter((c) => c._id !== movieId));
       })
       .catch((err) => {
         console.log(`${err}`);
@@ -241,9 +258,12 @@ function App() {
     const movies = JSON.parse(localStorage.getItem("movies"));
 
     if (!keyword) {
-      setFilteredMovies([]);
+      setSavedMovies(movies);
+      // setFilteredMovies([]);
+      return;
     }
-    setFilteredMovies(filterMoviesArray(movies, keyword));
+    setSavedMovies(filterMoviesArray(movies, keyword));
+    // setFilteredMovies(filterMoviesArray(movies, keyword));
     localStorage.setItem(
       "filteredMovies",
       JSON.stringify(filterMoviesArray(movies, keyword))

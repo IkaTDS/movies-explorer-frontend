@@ -45,10 +45,13 @@ export class MainApi {
     }).then(this._getResponse);
   }
 
-  getUser() {
+  getUser(token) {
     return fetch(`${this.url}/users/me`, {
       method: "GET",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        "authorization": `Bearer ${token}`,
+      },
     }).then(this._getResponse);
   }
 

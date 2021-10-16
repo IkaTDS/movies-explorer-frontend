@@ -29,7 +29,7 @@ export default function MoviesCardList(props) {
           </Route>
           <Route path="/saved-movies">
             {location.pathname === "/saved-movies" &&
-              savedMoviesToShow.map((movie) => (
+              savedMovies.map((movie) => (
                 <MoviesCard
                   key={movie.movieId}
                   movie={movie}

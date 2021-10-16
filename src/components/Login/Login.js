@@ -9,8 +9,8 @@ export default function Login({onSignIn}) {
   function handleSubmit(e) {
     e.preventDefault();
     onSignIn({
-      email: values['login-email'],
-      password: values['login-password'],
+      email: values.email,
+      password: values.password,
     });
     resetForm();
   }
@@ -22,35 +22,35 @@ export default function Login({onSignIn}) {
         <h2 className="login__title">Рады видеть!</h2>
         <form className="login__form" onSubmit={handleSubmit}>
           <fieldset className="login__fieldset">
-            <label className="login__label" htmlFor="login-email">
+            <label className="login__label" htmlFor="email">
               E-mail
             </label>
             <input
-              className={`login__input ${errors["login-email"] ? "register__login_error" : ""}`}
-              id="login-email"
-              name="login-email"
+              className={`login__input ${errors.email ? "register__login_error" : ""}`}
+              id="email"
+              name="email"
               type="text"
-              value={values.email}
+              value={values.email || ""}
               onChange={handleChange}
               pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               required
             />
-            <span className={`login__error ${errors["login-email"] ? "login__error_active" : ""}`}>{errors["login-email"] || ""}</span>
+            <span className={`login__error ${errors.email ? "login__error_active" : ""}`}>{errors.email || ""}</span>
           </fieldset>
           <fieldset className="login__fieldset">
-            <label className="login__label" htmlFor="login-password">
+            <label className="login__label" htmlFor="password">
               Пароль
             </label>
             <input
               className="login__input login__input_error"
-              id="login-password"
-              name="login-password"
+              id="password"
+              name="password"
               type="password"
-              value={values.password}
+              value={values.password || ""}
               onChange={handleChange}
               required
             />
-            <span className={`login__error ${errors["login-password"] ? "login__error_active" : ""}`}>{errors["login-password"] || ""}</span>
+            <span className={`login__error ${errors.password ? "login__error_active" : ""}`}>{errors.password || ""}</span>
           </fieldset>
           <button className={`login__button ${!isValid ? "login__button_error" : ""}`} disabled={!isValid} type="submit">Войти</button>
         </form>
