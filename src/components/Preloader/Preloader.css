@@ -87,3 +87,20 @@
     background: #3456F3;
     animation: preloader-inside-red 1s ease-in-out infinite;
 }
+
+.preloader_hidden {
+    display: none;
+}
+
+.preloader__search-error {
+    display: block;
+}
+
+.preloader__search-error_hidden {
+    display: none;
+}
+
+.preloader__search-error-text {
+    text-align: center;
+    margin: 25px 0 0;
+}

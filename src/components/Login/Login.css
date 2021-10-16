@@ -64,7 +64,7 @@
 }
 
 .login__input_error {
-    color: #EE3465;
+    color: #000;
 }
 
 .login__input:focus {
@@ -103,6 +103,14 @@
 
 .login__button:hover {
     opacity: .8;
+}
+
+.login__button_error {
+    opacity: .3;
+}
+
+.login__button_error:hover {
+    opacity: .3;
 }
 
 .login__signin-label {

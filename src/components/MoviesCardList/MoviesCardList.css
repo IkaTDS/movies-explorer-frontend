@@ -30,6 +30,10 @@
     border-radius: 6px;
 }
 
+.card-list__more-button_hidden {
+    display: none;
+}
+
 .card-list__more-button:hover {
     opacity: .8;
 }

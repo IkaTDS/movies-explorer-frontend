@@ -64,7 +64,7 @@
 }
 
 .register__input_error {
-    color: #EE3465;
+    color: #000;
 }
 
 .register__input:focus {
@@ -98,11 +98,35 @@
     color: #FFFFFF;
     border: none;
     cursor: pointer;
-    margin: 134px 0 0;
+    margin: 10px 0 0;
 }
 
 .register__button:hover {
     opacity: .8;
+}
+
+.register__button_error {
+    opacity: .3;
+}
+
+.register__button_error:hover {
+    opacity: .3;
+}
+
+.register__submit-error {
+    visibility: hidden;
+    display: block;
+    margin: 112px 0 0;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}
+
+.register__submit-error_active {
+    visibility: visible;
 }
 
 .register__signin-label {
@@ -157,7 +181,10 @@
         height: 45px;
         font-size: 12px;
         line-height: 15px;
-        margin: 222px 0 0;
+    }
+
+    .register__submit-error {
+        margin: 200px 0 0;
     }
 
     .register__signin-label {
