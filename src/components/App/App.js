@@ -76,7 +76,7 @@ function App() {
     if (!token) {
       return;
     } else {
-      Promise.all([mainApi.getUser(token), mainApi.getMovies()])
+      Promise.all([mainApi.getUser(), mainApi.getMovies()])
         .then(([userData, movies]) => {
           setCurrentUser({
             ...currentUser,
@@ -114,14 +114,16 @@ function App() {
   function handleSearchSavedMovies(keyWord) {
     const movies = JSON.parse(localStorage.getItem("savedMovies"));
     if (!keyWord) {
-      setFilteredSavedMovies([]);
+      // setFilteredSavedMovies([]);
+      setSavedMovies(movies);
       return;
     }
-    setFilteredSavedMovies(filterMoviesArray(movies, keyWord));
-    localStorage.setItem(
-      "filteredSavedMovies",
-      JSON.stringify(filterMoviesArray(movies, keyWord))
-    );
+    // setFilteredSavedMovies(filterMoviesArray(movies, keyWord));
+    setSavedMovies(filterMoviesArray(movies, keyWord));
+    // localStorage.setItem(
+    //   "filteredSavedMovies",
+    //   JSON.stringify(filterMoviesArray(movies, keyWord))
+    // );
   }
 
   function checkSaveStatus(movie) {
@@ -135,7 +137,7 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setCurrentUser({name: "", email: ""});
+    setCurrentUser({ name: "", email: "" });
     history.push("/");
   }
 
@@ -187,8 +189,8 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem("token", res.token);
-          history.push("/movies");
           setLoggedIn(true);
+          history.push("/movies");
         }
       })
       .catch((err) => {
@@ -211,7 +213,6 @@ function App() {
     const movieId = savedMovies.find(
       (savedMovie) => savedMovie.movieId === (movie.movieId || movie.id)
     )._id;
-    console.log(movieId);
     mainApi
       .deleteMovie(movieId)
       .then(() => {

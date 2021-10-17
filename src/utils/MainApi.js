@@ -7,7 +7,10 @@ export class MainApi {
   getMovies() {
     return fetch(`${this.url}/movies`, {
       method: "GET",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+      }
     }).then(this._getResponse);
   }
 
@@ -21,7 +24,10 @@ export class MainApi {
   saveMovie(movie) {
     return fetch(`${this.url}/movies`, {
       method: "POST",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
       body: JSON.stringify({
         movieId: movie.id,
         nameRU: movie.nameRU,
@@ -41,16 +47,19 @@ export class MainApi {
   deleteMovie(movieId) {
     return fetch(`${this.url}/movies/${movieId}`, {
       method: "DELETE",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
     }).then(this._getResponse);
   }
 
-  getUser(token) {
+  getUser() {
     return fetch(`${this.url}/users/me`, {
       method: "GET",
       headers: {
         ...this.headers,
-        "authorization": `Bearer ${token}`,
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
       },
     }).then(this._getResponse);
   }
@@ -58,7 +67,10 @@ export class MainApi {
   editUser(data) {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
       body: JSON.stringify({
         name: data.name,
         email: data.email,
@@ -101,8 +113,8 @@ export class MainApi {
 }
 
 const mainApi = new MainApi({
-  // url: 'https://api.irakliy-diplom.nomoredomains.club',
-  url: "http://localhost:3001",
+  url: 'https://api.irakliy-diplom.nomoredomains.club',
+  // url: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
     "authorization": `Bearer ${localStorage.getItem("token")}`,
