@@ -25,6 +25,7 @@ export default function SearchForm(props) {
 
   function handleThumblerOn(check) {
     checkShortMovies(check);
+    props.searchFilm(keyWord);
   }
 
   return (

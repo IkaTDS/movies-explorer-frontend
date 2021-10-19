@@ -3,7 +3,7 @@ import "./Profile.css";
 import { useFormWithValidation } from "../../utils/UseFormWithValidation";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-export default function Profile({ onEdit, onSignOut }) {
+export default function Profile({ onEdit, onSignOut, updateUserMessage }) {
   const { values, handleChange, errors, isValid, setValues } =
     useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
@@ -92,7 +92,7 @@ export default function Profile({ onEdit, onSignOut }) {
             {errors.email || "Ошибка"}
           </span>
         </fieldset>
-
+        <span className={`profile__submit-message ${updateUserMessage ? "profile__submit-message_active" : ""}`}>{updateUserMessage}</span>
         <button
           className={`profile__edit-button ${
             !isValid || !isChanged ? "profile__edit-button_error" : ""

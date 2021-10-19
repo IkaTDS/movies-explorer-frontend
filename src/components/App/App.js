@@ -27,6 +27,7 @@ function App() {
   const [isLoading, setLoading] = React.useState(false);
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = React.useState(false);
+  const [updateUserMessage, setUpdateUserMessage] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [moviesIsShown, setMoviesIsShown] = React.useState(7);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
@@ -39,7 +40,15 @@ function App() {
   const [moviesIsShownCount, setMoviesIsShownCount] = React.useState(7);
   const [isShortMoviesFiltred, setShortMoviesFiltred] = React.useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = React.useState([]);
-  let location = useLocation();
+  let location = useLocation().pathname;
+  const locations = [
+    "/",
+    "/movies",
+    "/saved-movies",
+    "/profile",
+    "/signin",
+    "/signup",
+  ];
 
   React.useEffect(() => {
     if (width >= 480) {
@@ -51,25 +60,27 @@ function App() {
     }
   }, [width]);
 
-  React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      mainApi
-        .checkToken(token)
-        .then((user) => {
-          if (user) {
-            setLoggedIn(true);
-            setCurrentUser(user);
-            history.push(location);
-          }
-        })
-        .catch((err) => {
-          console.log(`${err}`);
-          localStorage.removeItem("token");
-          history.push("/");
-        });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     mainApi
+  //       .checkToken(token)
+  //       .then((user) => {
+  //         if (user) {
+  //           setLoggedIn(true);
+  //           setCurrentUser(user);
+  //           if (locations.includes(location)) {
+  //             history.push(location);
+  //           }
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(`${err}`);
+  //         localStorage.removeItem("token");
+  //         history.push("/");
+  //       });
+  //   }
+  // }, []);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -78,11 +89,20 @@ function App() {
     } else {
       Promise.all([mainApi.getUser(), mainApi.getMovies()])
         .then(([userData, movies]) => {
+          console.log(userData);
+          setLoggedIn(true);
+
           setCurrentUser({
             ...currentUser,
             name: userData.name,
             email: userData.email,
+            id: userData._id,
           });
+
+          if (locations.includes(location)) {
+            history.push(location);
+          }
+
           localStorage.setItem("savedMovies", JSON.stringify(movies));
           setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
           setFilteredSavedMovies(
@@ -93,7 +113,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [isLoggedIn]);
+  }, []);
 
   React.useEffect(() => {
     moviesApi
@@ -137,7 +157,7 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setCurrentUser({ name: "", email: "" });
+    setCurrentUser({ name: "", email: "", });
     history.push("/");
   }
 
@@ -145,7 +165,11 @@ function App() {
     mainApi
       .editUser(updatedUserInfo)
       .then((updatedUserInfo) => {
+        setUpdateUserMessage("Профиль успешно обновлён.");
         setCurrentUser(updatedUserInfo);
+        setTimeout(() => {
+          setUpdateUserMessage("");
+        }, 3000);
       })
       .catch((err) => {
         console.log(`${err}`);
@@ -259,12 +283,12 @@ function App() {
     const movies = JSON.parse(localStorage.getItem("movies"));
 
     if (!keyword) {
-      setSavedMovies(movies);
-      // setFilteredMovies([]);
+      // setSavedMovies(movies);
+      setFilteredMovies([]);
       return;
     }
-    setSavedMovies(filterMoviesArray(movies, keyword));
-    // setFilteredMovies(filterMoviesArray(movies, keyword));
+    // setSavedMovies(filterMoviesArray(movies, keyword));
+    setFilteredMovies(filterMoviesArray(movies, keyword));
     localStorage.setItem(
       "filteredMovies",
       JSON.stringify(filterMoviesArray(movies, keyword))
@@ -282,84 +306,88 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <>
-          <Switch>
-            <Route exact path={["/", "/movies", "/saved-movies", "/profile"]}>
-              <Header
-                isBurgerMenuOpen={isBurgerMenuOpen}
-                burgerMenuOpen={handleBurgerButtonClick}
-                burgerMenuClose={handleBurgerCloseButtonClick}
-                isLoggedIn={isLoggedIn}
-              />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route exact path="/">
-              <Main />
-            </Route>
+        <Switch>
+          <Route exact path={["/", "/movies", "/saved-movies", "/profile"]}>
+            <Header
+              isBurgerMenuOpen={isBurgerMenuOpen}
+              burgerMenuOpen={handleBurgerButtonClick}
+              burgerMenuClose={handleBurgerCloseButtonClick}
+              isLoggedIn={isLoggedIn}
+            />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
 
-            <ProtectedRoute path="/movies" isLoggedIn={isLoggedIn}>
-              <Movies
-                movies={movies}
-                isLoading={isLoading}
-                searchFilm={handleSearchFilm}
-                filteredMovies={filteredMovies}
-                message={message}
-                deleteMovie={deleteMovie}
-                isFilmsNotFoundShown={isFilmsNotFoundShown}
-                moviesIsShown={moviesIsShown}
-                moreMovies={handleShowMoreMovies}
-                likeMovie={hadleLikeMovie}
-                savedMovies={savedMovies}
-                checkSaveStatus={checkSaveStatus}
-                checkShortMovies={checkShortMovies}
-                isShortMoviesFiltred={isShortMoviesFiltred}
-              />
-            </ProtectedRoute>
+          <ProtectedRoute path="/movies" isLoggedIn={isLoggedIn}>
+            <Movies
+              movies={movies}
+              isLoading={isLoading}
+              searchFilm={handleSearchFilm}
+              filteredMovies={filteredMovies}
+              message={message}
+              deleteMovie={deleteMovie}
+              isFilmsNotFoundShown={isFilmsNotFoundShown}
+              moviesIsShown={moviesIsShown}
+              moreMovies={handleShowMoreMovies}
+              likeMovie={hadleLikeMovie}
+              savedMovies={savedMovies}
+              checkSaveStatus={checkSaveStatus}
+              checkShortMovies={checkShortMovies}
+              isShortMoviesFiltred={isShortMoviesFiltred}
+            />
+          </ProtectedRoute>
 
-            <ProtectedRoute path="/saved-movies" isLoggedIn={isLoggedIn}>
-              <SavedMovies
-                savedMovies={savedMovies}
-                isLoading={isLoading}
-                deleteMovie={deleteMovie}
-                isFilmsNotFoundShown={isFilmsNotFoundShown}
-                searchFilm={handleSearchFilm}
-                checkShortMovies={checkShortMovies}
-                filteredSavedMovies={filteredSavedMovies}
-                searchSavedMovies={handleSearchSavedMovies}
-                isShortMoviesFiltred={isShortMoviesFiltred}
-              />
-            </ProtectedRoute>
+          <ProtectedRoute path="/saved-movies" isLoggedIn={isLoggedIn}>
+            <SavedMovies
+              savedMovies={savedMovies}
+              isLoading={isLoading}
+              deleteMovie={deleteMovie}
+              isFilmsNotFoundShown={isFilmsNotFoundShown}
+              searchFilm={handleSearchFilm}
+              checkShortMovies={checkShortMovies}
+              filteredSavedMovies={filteredSavedMovies}
+              searchSavedMovies={handleSearchSavedMovies}
+              isShortMoviesFiltred={isShortMoviesFiltred}
+            />
+          </ProtectedRoute>
 
-            <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
-              <Profile onEdit={handleEditProfile} onSignOut={handleSignOut} />
-            </ProtectedRoute>
+          <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
+            <Profile
+              onEdit={handleEditProfile}
+              onSignOut={handleSignOut}
+              updateUserMessage={updateUserMessage}
+            />
+          </ProtectedRoute>
 
-            <Route path="/signup">
+          <Route path="/signup">
+            {isLoggedIn ? (
+              <Redirect to="/profile" />
+            ) : (
               <Register
                 onSignUp={handleSignUp}
                 signUpErrorMessage={signUpErrorMessage}
               />
-            </Route>
+            )}
+          </Route>
 
-            <Route path="/signin">
+          <Route path="/signin">
+            {isLoggedIn ? (
+              <Redirect to="/profile" />
+            ) : (
               <Login onSignIn={handleSignIn} />
-            </Route>
+            )}
+          </Route>
 
-            <Route path="/not-found">
-              <NotFound />
-            </Route>
-
-            <Route path="*">
-              <Redirect to="/not-found" />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route exact path={["/", "/movies", "/saved-movies"]}>
-              <Footer />
-            </Route>
-          </Switch>
-        </>
+          <NotFound />
+        </Switch>
+        <Switch>
+          <Route exact path={["/", "/movies", "/saved-movies"]}>
+            <Footer />
+          </Route>
+        </Switch>
       </div>
     </CurrentUserContext.Provider>
   );

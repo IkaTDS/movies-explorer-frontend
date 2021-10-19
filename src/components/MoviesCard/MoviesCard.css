@@ -75,6 +75,10 @@
     background-color: transparent;
 }
 
+.movies-card__delete-card_hidden {
+    display: none;
+}
+
 .movies-card__image {
     width: 220px;
     height: 122px;

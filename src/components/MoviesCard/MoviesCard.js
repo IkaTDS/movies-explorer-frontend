@@ -1,13 +1,17 @@
 import React from "react";
 import { useLocation, Switch, Route } from "react-router-dom";
 import "./MoviesCard.css";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 export default function MoviesCard(props) {
-  const { nameRU, duration } = props.movie;
+  const { nameRU, duration, trailerLink } = props.movie;
   const { savedMovies, likeMovie, deleteMovie } = props;
   const location = useLocation();
   const savedMovieLocation = location.pathname === "/saved-movies";
   const movieIsSaved = savedMovies.some((i) => i.movieId === props.movie.id);
+  const trailer = !savedMovieLocation ? `${trailerLink}` : `${props.movie.trailer}`;
+  const currentUser = React.useContext(CurrentUserContext);
+  const userCheck = currentUser.id === props.movie.owner;
   const image = !savedMovieLocation
     ? `https://api.nomoreparties.co${props.movie.image.url}`
     : `${props.movie.image}`;
@@ -48,14 +52,14 @@ export default function MoviesCard(props) {
             <Route path="/saved-movies">
               <button
                 type="button"
-                className={`movies-card__delete-card`}
+                className={`movies-card__delete-card ${userCheck ? "" : "movies-card__delete-card_hidden"}`}
                 onClick={handleDeleteMovie}
               />
             </Route>
           </Switch>
         </div>
       </div>
-      <img className="movies-card__image" src={image} alt="изображение" />
+      <a href={trailer} target="_blank" rel="noreferrer"><img className="movies-card__image" src={image} alt="Изображение" /></a>
     </div>
   );
 }

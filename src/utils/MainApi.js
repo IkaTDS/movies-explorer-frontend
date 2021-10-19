@@ -37,6 +37,7 @@ export class MainApi {
         trailer: movie.trailerLink,
         country: movie.country,
         duration: movie.duration,
+        owner: movie.owner,
         year: `${movie.year}`,
         image: `https://api.nomoreparties.co${movie.image.url}`,
         thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
