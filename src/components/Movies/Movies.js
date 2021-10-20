@@ -19,12 +19,15 @@ export default function Movies(props) {
     checkShortMovies,
     isShortMoviesFiltred,
     sortShortMovies,
+    moreShortMovies,
+    shortMoviesIsShown,
   } = props;
 
   const [shortMovies, setShortMovies] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
 
   const shownMovies = filteredMovies.slice(0, moviesIsShown);
+  const shownShortMovies = shortMovies.slice(0, shortMoviesIsShown);
 
   React.useEffect(() => {
     if (isChecked) {
@@ -49,10 +52,10 @@ export default function Movies(props) {
         filteredMovies={filteredMovies}
         message={message}
         moviesIsShown={moviesIsShown}
-        moreMovies={moreMovies}
+        moreMovies={isChecked ? moreShortMovies : moreMovies}
         savedMovies={savedMovies}
         likeMovie={likeMovie}
-        shownMovies={isChecked ? shortMovies : shownMovies}
+        shownMovies={isChecked ? shownShortMovies : shownMovies}
       />
     </div>
   );

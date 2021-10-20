@@ -40,6 +40,8 @@ function App() {
   const [moviesIsShownCount, setMoviesIsShownCount] = React.useState(7);
   const [isShortMoviesFiltred, setShortMoviesFiltred] = React.useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = React.useState([]);
+  const [shortMoviesShownCount, setShortMoviesShownCount] = React.useState(7);
+  const [shortMoviesIsShown, setShortMoviesIsShown] = React.useState(7);
   let location = useLocation().pathname;
   const locations = [
     "/",
@@ -54,9 +56,13 @@ function App() {
     if (width >= 480) {
       setMoviesIsShown(7);
       setMoviesIsShownCount(7);
+      setShortMoviesIsShown(7);
+      setShortMoviesShownCount(7);
     } else if (width < 480) {
       setMoviesIsShown(5);
       setMoviesIsShownCount(5);
+      setShortMoviesIsShown(5);
+      setShortMoviesShownCount(5);
     }
   }, [width]);
 
@@ -262,6 +268,10 @@ function App() {
     setMoviesIsShown(moviesIsShown + moviesIsShownCount);
   }
 
+  function handleShowMoreShortMovies() {
+    setShortMoviesIsShown(shortMoviesIsShown + shortMoviesShownCount);
+  }
+
   function filterMoviesArray(movies, keyword) {
     if (!keyword) {
       return [];
@@ -341,6 +351,8 @@ function App() {
               isFilmsNotFoundShown={isFilmsNotFoundShown}
               moviesIsShown={moviesIsShown}
               moreMovies={handleShowMoreMovies}
+              moreShortMovies={handleShowMoreShortMovies}
+              shortMoviesIsShown={shortMoviesIsShown}
               likeMovie={hadleLikeMovie}
               savedMovies={savedMovies}
               checkSaveStatus={checkSaveStatus}
