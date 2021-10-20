@@ -1,26 +1,30 @@
 import React from "react";
-import { NavLink, Link, Route, Switch, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import "./Header.css";
 
 function Header(props) {
-  const location = useLocation();  
+  const location = useLocation();
+  const { isLoggedIn } = props;
+
   return (
-    <header className={`header ${location.pathname !== '/' ? 'header_white' : ''}`}>
+    <header
+      className={`header ${location.pathname !== "/" ? "header_white" : ""}`}
+    >
       <Link to="/" className="header-logo" />
+      {!isLoggedIn && (
+        <nav className="header__menu">
+          <Link to="/signup" className="header__signup-button">
+            Регистрация
+          </Link>
 
-      <Switch>
-        <Route exact path="/">
-          <nav className="header__menu">
-            <Link to="/signup" className="header__signup-button">
-              Регистрация
-            </Link>
+          <Link to="/signin" className="header__signin-button">
+            Войти
+          </Link>
+        </nav>
+      )}
 
-            <Link to="/signin" className="header__signin-button">
-              Войти
-            </Link>
-          </nav>
-        </Route>
-        <Route path={["/movies", "/saved-movies", "/profile"]}>
+      {isLoggedIn && (
+        <>
           <div className="header__navigation">
             <NavLink
               to="/movies"
@@ -43,7 +47,7 @@ function Header(props) {
           <button
             className="header__burger-button"
             onClick={props.burgerMenuOpen}
-          ></button>
+          />
 
           <div
             className={`header__burger-container ${
@@ -58,10 +62,11 @@ function Header(props) {
               <button
                 className="header__burger-close-button"
                 onClick={props.burgerMenuClose}
-              ></button>
+              />
               <nav className="header__burger-navigation">
                 <NavLink
-                  exact to="/"
+                  exact
+                  to="/"
                   className="header__burger-link"
                   activeClassName="header__burger-link_active"
                   onClick={props.burgerMenuClose}
@@ -94,8 +99,8 @@ function Header(props) {
               </Link>
             </div>
           </div>
-        </Route>
-      </Switch>
+        </>
+      )}
     </header>
   );
 }

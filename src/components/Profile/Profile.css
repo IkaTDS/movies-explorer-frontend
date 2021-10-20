@@ -6,6 +6,22 @@
     align-items: center;
 }
 
+.profile__submit-message {
+  visibility: hidden;
+  display: block;
+  margin: 112px 0 0;
+  text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+}
+
+.profile__submit-message_active {
+  visibility: visible;
+}
+
 .profile__title {
     font-style: normal;
     font-weight: 500;
@@ -33,14 +49,27 @@
     background-color: transparent;
 }
 
+.profile__input_error {
+    color: #000;
+}
+
+.profile__input:focus {
+    border-bottom: 1px solid #3456F3;
+}
+
 .profile__container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     border: none;
     border-bottom: 1px solid #E8E8E8;
     margin: 17px auto 0px;
-    padding: 0 0 16px;
+    padding: 0 0 5px;
+}
+
+.profile__form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profile__container:first-of-type {
@@ -56,8 +85,23 @@
     margin: 123px 0 0;
 }
 
+.profile__error {
+    visibility: hidden;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    margin: 6px 0 0;
+    text-align: right;
+}
+
+.profile__error_active {
+    visibility: visible;
+}
+
 .profile__edit-button {
-    margin: 220px 0 0;
+    margin: 10px 0 0;
     width: 410px;
     height: 16px;
     font-style: normal;
@@ -71,6 +115,19 @@
     justify-content: center;
     background-color: transparent;
     border: none;
+    color: #000;
+}
+
+.profile__edit-button:hover {
+    opacity: .8;
+}
+
+.profile__edit-button_error {
+    opacity: .3;
+}
+
+.profile__edit-button:hover {
+    opacity: .3;
 }
 
 .profile__exit-button {
@@ -99,10 +156,6 @@
     .profile__form {
         margin: 96px 0 0;
     }
-
-    .profile__edit-button {
-        margin: 210px 0 0;
-    }
 }
 
 @media screen and (max-width: 470px) {
@@ -115,7 +168,6 @@
     }
 
     .profile__edit-button {
-        margin: 379px 0 0;
         font-size: 12px;
         line-height: 15px;
         width: 300px;
@@ -131,5 +183,9 @@
 
     .profile__container {
         max-width: 260px;
+    }
+
+    .profile__submit-message {
+      margin: 200px 0 0;
     }
 }
