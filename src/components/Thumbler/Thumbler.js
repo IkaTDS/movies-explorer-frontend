@@ -6,7 +6,7 @@ export default function Thumbler(props) {
   const [ isChecked, setIsChecked ] = React.useState(false);
 
   function handleThumblerOnChange(event) {
-    props.thumblerOn(isChecked);
+    props.thumblerOn(!isChecked);
     setIsChecked(event.target.checked)
   }
 

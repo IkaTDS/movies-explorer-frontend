@@ -16,9 +16,20 @@ export default function SavedMovies(props) {
     filteredSavedMovies,
     isShortMoviesFiltred,
     isFilmsNotFoundShown,
+    sortShortMovies
   } = props;
+
+  const [shortMovies, setShortMovies] = React.useState([]);
+  const [isChecked, setIsChecked] = React.useState(false);
+
 //   const savedMoviesToShow = filteredSavedMovies.length === 0 ? savedMovies : filteredSavedMovies
   const savedMoviesToShow = filteredSavedMovies
+
+  React.useEffect(() => {
+    if (isChecked) {
+      setShortMovies(sortShortMovies(savedMovies));
+    }
+  }, [isChecked])
 
   return (
     <div>
@@ -28,14 +39,15 @@ export default function SavedMovies(props) {
         searchSavedMovies={searchSavedMovies}
         filteredSavedMovies={filteredSavedMovies}
         isShortMoviesFiltred={isShortMoviesFiltred}
+        setIsChecked={setIsChecked}
       />
       <Preloader isLoading={isLoading} isFilmsNotFoundShown={isFilmsNotFoundShown} />
       <MoviesCardList
-        savedMovies={savedMovies}
         currentUserMovies={currentUserMovies}
         deleteMovie={deleteMovie}
         checkSaveStatus={checkSaveStatus}
         savedMoviesToShow={savedMoviesToShow}
+        savedMovies={isChecked ? shortMovies : savedMovies}
       />
     </div>
   );

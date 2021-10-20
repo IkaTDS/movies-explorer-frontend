@@ -5,10 +5,11 @@ import { useLocation } from "react-router-dom";
 
 export default function SearchForm(props) {
   const [keyWord, setKeyWord] = React.useState("");
-  const { checkShortMovies, isShortMoviesFiltred, searchSavedMovies } = props;
+  const { checkShortMovies, isShortMoviesFiltred, searchSavedMovies, setIsChecked } = props;
   const Location = useLocation();
   const savedMoviesLocation = Location.pathname === "/saved-movies";
   const moviesLocation = Location.pathname === "/movies";
+  const [isShortMovies, setIsShortMovies] = React.useState(false);
 
   function handleChangeKeyword(e) {
     setKeyWord(e.target.value);
@@ -24,8 +25,10 @@ export default function SearchForm(props) {
   }
 
   function handleThumblerOn(check) {
-    checkShortMovies(check);
-    props.searchFilm(keyWord);
+    // checkShortMovies(check);
+    // props.searchFilm(keyWord);
+    setIsShortMovies(check);
+    setIsChecked(!isShortMovies);
   }
 
   return (

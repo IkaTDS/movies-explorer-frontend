@@ -131,6 +131,13 @@ function App() {
       });
   }, [moviesIsShownCount]);
 
+  function sortShortMovies(movies) {
+    const shortMoviesArray = movies.filter(
+      (movie) => movie.duration <= 40
+    );
+    return shortMoviesArray;
+  }
+
   function handleSearchSavedMovies(keyWord) {
     const movies = JSON.parse(localStorage.getItem("savedMovies"));
     if (!keyWord) {
@@ -259,24 +266,26 @@ function App() {
     if (!keyword) {
       return [];
     }
-    const filteredMovies = !isShortMoviesFiltred
-      ? movies.filter((movie) =>
-          movie.nameRU.toLowerCase().includes(keyword.toLowerCase())
-        )
-      : movies.filter(
-          (movie) =>
-            movie.nameRU.toLowerCase().includes(keyword.toLowerCase()) &&
-            movie.duration <= 40
-        );
-    setFilteredMovies(filteredMovies);
+    // const filteredMovies = !isShortMoviesFiltred
+    //   ? movies.filter((movie) =>
+    //       movie.nameRU.toLowerCase().includes(keyword.toLowerCase())
+    //     )
+    //   : movies.filter(
+    //       (movie) =>
+    //         movie.nameRU.toLowerCase().includes(keyword.toLowerCase()) &&
+    //         movie.duration <= 40
+    //     );
+    // setFilteredMovies(filteredMovies);
 
-    if (filteredMovies.length === 0) {
+    const filteredMoviesArray = movies.filter(movie => movie.nameRU.toLowerCase().includes(keyword.toLowerCase()));
+
+    if (filteredMoviesArray.length === 0) {
       setFilmsNotFoundShown(true);
     } else {
       setFilmsNotFoundShown(false);
     }
 
-    return filteredMovies;
+    return filteredMoviesArray;
   }
 
   function handleSearchFilm(keyword) {
@@ -337,6 +346,7 @@ function App() {
               checkSaveStatus={checkSaveStatus}
               checkShortMovies={checkShortMovies}
               isShortMoviesFiltred={isShortMoviesFiltred}
+              sortShortMovies={sortShortMovies}
             />
           </ProtectedRoute>
 
@@ -351,6 +361,7 @@ function App() {
               filteredSavedMovies={filteredSavedMovies}
               searchSavedMovies={handleSearchSavedMovies}
               isShortMoviesFiltred={isShortMoviesFiltred}
+              sortShortMovies={sortShortMovies}
             />
           </ProtectedRoute>
 
